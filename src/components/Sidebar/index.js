@@ -96,10 +96,13 @@ export default function Sidebar() {
             <Name>Alisson Vargas</Name>
           </Link>
           <SocialLinks>
-            <a href="https://github.com/alissonsv">
+            <a href="https://github.com/alissonsv" aria-label="GitHub link">
               <FaGithub />
             </a>
-            <a href="https://www.linkedin.com/in/alisson-vargas/">
+            <a
+              href="https://www.linkedin.com/in/alisson-vargas/"
+              aria-label="Linkedin link"
+            >
               <FaLinkedin />
             </a>
           </SocialLinks>

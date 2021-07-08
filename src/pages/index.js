@@ -86,10 +86,13 @@ export default function IndexPage() {
           <h1>Alisson Vargas</h1>
 
           <SocialLinks>
-            <a href="https://github.com/alissonsv">
+            <a href="https://github.com/alissonsv" aria-label="GitHub Link">
               <FaGithub />
             </a>
-            <a href="https://www.linkedin.com/in/alisson-vargas/">
+            <a
+              href="https://www.linkedin.com/in/alisson-vargas/"
+              aria-label="Linkedin Link"
+            >
               <FaLinkedin />
             </a>
           </SocialLinks>
