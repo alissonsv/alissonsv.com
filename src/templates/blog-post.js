@@ -27,7 +27,7 @@ const Article = styled.article`
   }
 
   h3 {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
   }
 
   table,
@@ -82,10 +82,26 @@ const Article = styled.article`
       color: #adbac7;
     }
   }
+
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
 `;
+
+const Head = styled.div`
+  padding-bottom: 1rem;
+  border-bottom: 0.1rem solid #ffffff;
+`
 
 const Title = styled.h1`
   font-size: 3rem;
+`;
+
+const Description = styled.p`
+  font-size: 1.2rem;
+  padding: 0.2em 0 0.5em 0;
+  color: white;
 `;
 
 const Time = styled.time`
@@ -113,8 +129,13 @@ export default function BlogPost({ data }) {
       <main>
         <Link to="/blog">← Voltar pro blog</Link>
         <Article>
-          <Title>{post.frontmatter.title}</Title>
-          <Time>{post.frontmatter.date}</Time>
+          <Head>
+            <Title>{post.frontmatter.title}</Title>
+            {post.frontmatter.description &&
+              <Description>{post.frontmatter.description}</Description>
+            }
+            <Time>{post.frontmatter.date}</Time>
+          </Head>
 
           <Body>
             <MDXProvider components={components}>
@@ -133,6 +154,7 @@ export const pageQuery = graphql`
       body
       frontmatter {
         title
+        description
         date(formatString: "DD [de] MMMM [de] YYYY", locale: "pt")
       }
     }

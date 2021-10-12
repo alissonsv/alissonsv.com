@@ -38,6 +38,7 @@ export const pageQuery = graphql`
         node {
           frontmatter {
             date(formatString: "DD [de] MMMM [de] YYYY", locale: "pt")
+            description
             title
           }
           fields {

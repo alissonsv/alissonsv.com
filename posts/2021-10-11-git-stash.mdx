@@ -1,0 +1,108 @@
+---
+date: '2021-10-11'
+title: 'Git stash'
+description: 'Mudando de branch sem fazer commit'
+---
+
+Imagine que você está trabalhando em uma nova funcionalidade no seu projeto, com algumas modificações e arquivos criados.
+De repente alguém do seu time te reporta um bug urgente que precisa ser resolvido para ontem!
+
+<br/>
+
+>E agora? Como trocar a branch para resolver o bug? Será preciso perder todo o trabalho que você já fez até agora?
+
+<br/>
+
+Fica tranquilo, é pra isso que existe o comando `git stash`!
+Essa última semana utilizei bastante este comando e resolvi escrever sobre ele, já que é um comando git não muito divulgado.
+
+Não pretendo alongar muito aqui, então, vamos pular logo para o conteúdo!
+
+## git stash
+
+```bash
+$ git stash
+
+Saved working directory and index state WIP on main: 72506f8 first commit
+```
+Quando utilizado sem nenhum comando adicional, o _git stash_ salva as alterações feitas nos arquivos já monitorados pelo git e retorna
+no terminal algo como no exemplo acima. Com isso ele limpa as alterações realizadas nos arquivos e ~~(se não possui arquivos não monitorados)~~ já é possível trocar a branch!
+
+
+
+- ### git stash pop
+```bash
+$ git stash pop
+```
+Esse é o comando que você irá utilizar para devolver as modificações salvas, onde o git irá pegar a última execução do `git stash` e devolver as modificações
+salvas por ele.
+
+- ### git stash list
+```bash
+$ git stash list
+
+stash@{0}: WIP on main: 72506f8 first commit
+(END)
+```
+Comando que exibe todas as modificações que foram salvas utilizando o git stash.
+
+
+- ### git stash show -p
+```bash
+$ git stash show -p
+
+diff --git a/index.html b/index.html
+index 90531a4..d25b3f3 100644
+--- a/index.html
++++ b/index.html
+@@ -1,2 +1,4 @@
+ <html>
++  <head>
++  </head>
+ </html>
+(END)
+```
+Mostra a diferença dos arquivos atuais para os arquivos salvos com o git stash
+
+- ### git stash clear
+
+Limpa toda a lista de modificações salvas com git stash.
+
+**Importante**: cuidado com esse comandos pois pode ser impossível de recuperar os arquivos.
+
+<br/>
+
+-----
+
+<br/>
+
+Agora para finalizar tem mais dois comandos. Quando precisar adicionar arquivos que não estão sendo monitorados pelo git, tem essas duas opções:
+
+
+
+- ### git stash -u
+
+Esse comando irá salvar as alterações dos arquivos monitorados, mais os arquivos que ainda não estão sendo monitorados, ou seja, os arquivos que
+ainda não estão em stage.
+
+- ### git stash -a
+
+Já esse comando irá salvar as alterações, os arquivos não monitorados E OS ARQUIVOS IGNORADOS, esse aqui literalmente salva tudo. 
+
+Use-o com sabedoria, pois se estiver em um projeto node por exemplo, ele irá salvar a pasta node_modules inteira, você não quer isso, confia.
+
+<img 
+    src="https://wac-cdn.atlassian.com/dam/jcr:d6fec41a-dc66-4af6-8b0f-c23d271eaf8e/01.svg?cdnVersion=1843"
+    style="max-height:300px"
+/>
+
+Fonte: [Atlassian](https://www.atlassian.com/br/git/tutorials/saving-changes/git-stash)
+
+<br/>
+
+-----
+
+## Conclusão
+
+Bom, basicamente é isso que andei utilizando nessa semana. Com esses comandos já é possível salvar, recuperar, mudar de branch e voltar sem preocupações.
+Espero que tenha sido útil para mais alguém e se precisar de ajuda ou tiver alguma dúvida/sugestão não exite em me chamar!
