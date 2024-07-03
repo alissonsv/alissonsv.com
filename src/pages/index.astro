@@ -1,0 +1,88 @@
+---
+import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
+
+import Layout from '../layouts/Layout.astro'
+import profileImage from '../images/profile.jpg'
+---
+<Layout title="Home">
+  <div class="container">
+    <main>
+      <Image src={ profileImage } alt="Alisson" width="150"/>
+      <div class="social">
+        <h1>Alisson Vargas<h1/>
+
+        <div class="social-links">
+            <a href="https://github.com/alissonsv" aria-label="GitHub Link">
+              <Icon name="mdi:github" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/alisson-vargas/"
+              aria-label="Linkedin Link"
+            >
+              <Icon name="mdi:linkedin" />
+            </a>
+        </div>
+      </div>
+
+      <a id="blog-link" href="/blog">
+        <h1>Acessar o Blog</h1>
+      </a>
+    </main>
+  </div>
+
+  <style>
+    div.container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    div.social {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      padding-top: 10px;
+    }
+
+    div.social-links {
+      padding-top: 10px;
+      font-size: 30px;
+    }
+
+    img {
+      border-radius: 50%;
+    }
+
+    a#blog-link {
+      margin-top: auto;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      height: 60%;
+      width: 40%;
+      padding: 50px;
+      border-radius: 20px;
+
+      background-color: #2f3640;
+      font-weight: 700;
+      font-size: 25px;
+
+      * {
+        color: #adbac7;
+      }
+
+      @media screen and (max-width: 1170px) {
+        width: 60%;
+      }
+    }
+  </style>
+</Layout>

@@ -4,10 +4,14 @@
   "description": "Blog com dicas sobre JavaScript, Node.Js e programação no geral",
   "version": "0.1.0",
   "author": "Alisson Vargas",
+  "type": "module",
   "dependencies": {
+    "@iconify-json/mdi": "^1.1.67",
     "@material-ui/core": "^4.11.4",
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
+    "astro": "^4.11.3",
+    "astro-icon": "^1.1.0",
     "babel-plugin-styled-components": "^1.12.0",
     "gatsby": "^3.8.1",
     "gatsby-plugin-image": "^1.8.0",
@@ -45,13 +49,14 @@
     "blog"
   ],
   "scripts": {
-    "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,mdx}\"",
-    "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "lint": "npx eslint 'src/**'",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "build": "astro build",
+    "dev": "astro dev",
+    "start": "astro dev",
+    "preview": "astro preview"
   }
 }
