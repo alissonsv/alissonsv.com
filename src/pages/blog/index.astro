@@ -3,8 +3,6 @@ import BlogLayout from '../../layouts/BlogLayout.astro'
 import createSlug from '../../lib/createSlug.ts'
 
 const posts = await Astro.glob('../../content/blog/**.mdx')
-
-posts.map(post => console.log(createSlug(post.frontmatter.title)))
 ---
 <BlogLayout>
   <ul>
