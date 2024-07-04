@@ -1,0 +1,50 @@
+---
+import BlogLayout from '../../layouts/BlogLayout.astro'
+import createSlug from '../../lib/createSlug.ts'
+
+const posts = await Astro.glob('../../content/blog/**.mdx')
+
+posts.map(post => console.log(createSlug(post.frontmatter.title)))
+---
+<BlogLayout>
+  <ul>
+    { posts.map((post) => (
+    <li>
+      <a href=`/blog/${createSlug(post.frontmatter.title)}`>
+        <section>
+          <h1>{post.frontmatter.title}</h1>
+          <time>{post.frontmatter.date}</time>
+
+          <h2>{post.frontmatter.description}</h2>
+        </section>
+      </a>
+    </li>
+    ))}
+  </ul>
+</BlogLayout>
+
+<style>
+  li {
+    border-bottom: 1px dotted;
+  }
+
+  section {
+    padding: 15px 0 15px 0;
+  }
+
+  h1 {
+    padding-top: 10px;
+    font-size: 28px;
+  }
+
+  time {
+    display: block;
+    padding-top: 5px;
+    font-size: 12px;
+  }
+
+  h2 {
+    font-size: 15px;
+    padding-top: 15px;
+  }
+</style>

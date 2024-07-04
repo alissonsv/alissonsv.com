@@ -6,6 +6,7 @@
   "author": "Alisson Vargas",
   "type": "module",
   "dependencies": {
+    "@astrojs/mdx": "^3.1.2",
     "@iconify-json/mdi": "^1.1.67",
     "@material-ui/core": "^4.11.4",
     "@mdx-js/mdx": "^1.6.22",
