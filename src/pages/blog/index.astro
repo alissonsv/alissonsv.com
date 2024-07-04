@@ -11,7 +11,15 @@ const posts = await Astro.glob('../../content/blog/**.mdx')
       <a href=`/blog/${createSlug(post.frontmatter.title)}`>
         <section>
           <h1>{post.frontmatter.title}</h1>
-          <time>{post.frontmatter.date}</time>
+          <time>{
+            new Date(post.frontmatter.date)
+              .toLocaleString('pt-BR', {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric'
+              })
+            }
+          </time>
 
           <h2>{post.frontmatter.description}</h2>
         </section>
