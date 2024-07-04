@@ -2,10 +2,10 @@
 import { Image } from 'astro:assets'
 import { Icon } from 'astro-icon/components'
 
-import Layout from '../layouts/Layout.astro'
+import BaseLayout from '../layouts/BaseLayout.astro'
 import profileImage from '../images/profile.jpg'
 ---
-<Layout title="Home">
+<BaseLayout title="Home">
   <div class="container">
     <main>
       <Image src={ profileImage } alt="Alisson" width="150"/>
@@ -51,7 +51,7 @@ import profileImage from '../images/profile.jpg'
 
     div.social-links {
       padding-top: 10px;
-      font-size: 30px;
+      font-size: 35px;
     }
 
     img {
