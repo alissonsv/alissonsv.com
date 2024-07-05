@@ -4,54 +4,27 @@
   "description": "Blog com dicas sobre JavaScript, Node.Js e programação no geral",
   "version": "0.1.0",
   "author": "Alisson Vargas",
+  "type": "module",
+  "scripts": {
+    "build": "astro check && astro build",
+    "dev": "astro dev",
+    "start": "astro dev",
+    "preview": "astro preview"
+  },
   "dependencies": {
-    "@material-ui/core": "^4.11.4",
-    "@mdx-js/mdx": "^1.6.22",
-    "@mdx-js/react": "^1.6.22",
-    "babel-plugin-styled-components": "^1.12.0",
-    "gatsby": "^3.8.1",
-    "gatsby-plugin-image": "^1.8.0",
-    "gatsby-plugin-manifest": "^3.6.0",
-    "gatsby-plugin-mdx": "^2.7.1",
-    "gatsby-plugin-offline": "^4.6.0",
-    "gatsby-plugin-react-helmet": "^4.6.0",
-    "gatsby-plugin-sharp": "^3.9.0",
-    "gatsby-plugin-styled-components": "^4.7.1",
-    "gatsby-remark-images": "^5.6.0",
-    "gatsby-source-filesystem": "^3.8.0",
-    "gatsby-transformer-sharp": "^3.6.0",
-    "prism-react-renderer": "^1.2.1",
-    "prop-types": "^15.7.2",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-helmet": "^6.1.0",
-    "react-icons": "^4.2.0",
-    "slugify": "^1.5.3",
-    "styled-components": "^5.3.0"
+    "@astrojs/mdx": "^3.1.2",
+    "@iconify-json/mdi": "^1.1.67",
+    "astro": "^4.11.3",
+    "astro-icon": "^1.1.0"
   },
   "devDependencies": {
-    "eslint": "^7.28.0",
-    "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-react": "^7.24.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "prettier": "^2.3.2"
+    "@astrojs/check": "^0.7.0",
+    "prettier": "^2.3.2",
+    "sharp": "^0.33.4",
+    "typescript": "^5.5.3"
   },
   "keywords": [
-    "gatsby",
+    "astro",
     "blog"
-  ],
-  "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,mdx}\"",
-    "start": "npm run develop",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
-    "lint": "npx eslint 'src/**'",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
-  }
+  ]
 }

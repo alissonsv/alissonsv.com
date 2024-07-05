@@ -1,0 +1,131 @@
+---
+import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
+
+import BaseLayout from './BaseLayout.astro';
+import profileImage from '../images/profile.jpg'
+
+const { title } = Astro.props;
+---
+<BaseLayout title={ title ?? 'Blog' }>
+  <div>
+    <div id="sidebar">
+      <div id="profile">
+        <a href="/">
+          <Image src={ profileImage } alt="Alisson" width="100" loading="eager"/>
+        </a>
+
+        <div id="social">
+          <a href="/"><h1>Alisson Vargas</h1></a>
+
+          <div id="social-links">
+            <a href="https://github.com/alissonsv" aria-label="GitHub Link">
+              <Icon name="mdi:github" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/alisson-vargas/"
+              aria-label="Linkedin Link"
+            >
+              <Icon name="mdi:linkedin" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main>
+      <slot />
+    </main>
+  </div>
+<BaseLayout>
+
+<style>
+  img {
+    border-radius: 50%;
+  }
+
+  h1 {
+  font-size: 24px;
+  }
+
+  main {
+    max-width: 80rem;
+    margin: 0 auto 0 auto;
+    padding: 24px;
+
+    * {
+      color: #adbac7;
+    }
+
+    @media screen and (max-width: 1170px) {
+      padding-top: 140px;
+    }
+
+    @media not screen and (max-width: 1170px) {
+      padding-left: 274px;
+    }
+  }
+
+  div#sidebar {
+    position: fixed;
+    background-color: #2f3640;
+    z-index: 300;
+
+    * {
+      color: #adbac7;
+    }
+
+    @media screen and (max-width: 1170px) {
+      height: 116px;
+      width: 100%;
+    }
+
+    @media not screen and (max-width: 1170px) {
+      width: 250px;
+      height: 100vh;
+    }
+  }
+
+  div#profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+
+    @media screen and (max-width: 1170px) {
+      flex-direction: row;
+    }
+
+    @media not screen and (max-width: 1170px) {
+      padding-top: 50px;
+    }
+  }
+
+  div#social {
+    display: flex;
+    flex-direction: column;
+    font-size: 30px;
+
+    @media not screen and (max-width: 1170px) {
+      padding-top: 10px;
+      align-items: center;
+    }
+
+    @media screen and (max-width: 1170px) {
+      padding-left: 10px;
+    }
+  }
+
+  div#social-links {
+    display: flex;
+    font-size: 35px;
+
+    * {
+      margin: 5px 5px 0 5px;
+
+      @media screen and (max-width: 1170px) {
+        margin: 5px 5px 0 0;
+      }
+    }
+  }
+</style>
