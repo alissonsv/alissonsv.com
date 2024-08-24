@@ -3,16 +3,37 @@ import '../styles/reset.css'
 import '../styles/global.css'
 
 const { title } = Astro.props;
+const fullTitle = `${title} | Alisson Vargas`
+const description = 'Blog com dicas sobre JavaScript, Node.Js e programação no geral'
+const faviconPath = '/favicon.png';
+
 ---
 <html lang="en">
   <head>
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={faviconPath} />
+    <meta property="og:site_name" content="Alisson Vargas" />
+
+    <!-- Twitter Cards Meta Tags -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={faviconPath} />
+
+    <!-- Basic Meta Tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
+
+    <!-- links -->
     <link rel="icon" type="image/svg+xml" href="/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <title>{ title } | Alisson Vargas</title>
   </head>
   <body>
     <slot />
