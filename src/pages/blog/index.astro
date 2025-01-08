@@ -1,19 +1,20 @@
 ---
+import { getCollection } from 'astro:content';
 import BlogLayout from '../../layouts/BlogLayout.astro'
 import createSlug from '../../lib/createSlug.ts'
 
-const posts = await Astro.glob('../../content/blog/**.mdx')
-posts.sort((a, b) => Date.parse(b.frontmatter.date) - Date.parse(a.frontmatter.date))
+const posts = await getCollection('blog');
+posts.sort((a, b) => Date.parse(b.data.date.toDateString()) - Date.parse(a.data.date.toDateString()))
 ---
 <BlogLayout>
   <ul>
     { posts.map((post) => (
     <li>
-      <a href=`/blog/${createSlug(post.frontmatter.title)}`>
+      <a href=`/blog/${createSlug(post.data.title)}`>
         <section>
-          <h1>{post.frontmatter.title}</h1>
+          <h1>{post.data.title}</h1>
           <time>{
-            new Date(post.frontmatter.date)
+            new Date(post.data.date)
               .toLocaleString('pt-BR', {
                 day: '2-digit',
                 month: 'long',
@@ -22,7 +23,7 @@ posts.sort((a, b) => Date.parse(b.frontmatter.date) - Date.parse(a.frontmatter.d
             }
           </time>
 
-          {post.frontmatter.description && <h2>{post.frontmatter.description}</h2> }
+          {post.data.description && <h2>{post.data.description}</h2> }
         </section>
       </a>
     </li>

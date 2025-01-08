@@ -1,7 +1,8 @@
 ---
+import { render } from 'astro:content';
 import { type CollectionEntry, getCollection } from 'astro:content';
-import createSlug from '../../lib/createSlug';
 
+import createSlug from '../../lib/createSlug';
 import BlogPostLayout from '../../layouts/BlogPostLayout.astro'
 
 export async function getStaticPaths() {
@@ -9,14 +10,15 @@ export async function getStaticPaths() {
 
   return posts.map((post: CollectionEntry<'blog'>) => ({
     params: {
-      slug: createSlug(post.data.title),
+      id: createSlug(post.data.title),
     },
     props: { entry: post },
   }))
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render()
+const { Content } = await render(entry);
+
 ---
 
 <BlogPostLayout frontmatter={entry.data}>
