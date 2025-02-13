@@ -1,0 +1,95 @@
+---
+date: '2025-12-02'
+title: 'Resolvendo o erro Unsupported PKCS12 PFX data'
+description: 'História e solução sobre o problema ocorrido no Node.js'
+---
+Essa semana resolvi um problema no Node.js, onde ao utilizar um certificado .pfx com o Axios ocorria o erro "Unsupported PKCS12 PFX data", o código era o seguinte:
+
+```ts
+const axiosClient = axios.create({
+  httpsAgent: new https.Agent({
+    pfx: readFileSync(certificatePath),
+    passphrase: certificatePassword
+  })
+})
+
+const response = await axiosClient.get(URL);
+```
+
+e o erro era esse:
+
+```sh
+Error: Unsupported PKCS12 PFX data
+    at configSecureContext (node:internal/tls/secure-context:290:15)
+    at Object.createSecureContext (node:_tls_common:114:3)
+    at Object.connect (node:_tls_wrap:1764:48)
+    at Agent.createConnection (node:https:173:22)
+    at Agent.createSocket (node:_http_agent:330:26)
+    at Agent.addRequest (node:_http_agent:278:10)
+    at new ClientRequest (node:_http_client:340:16)
+    at Object.request (node:https:381:10)
+    at RedirectableRequest._performRequest (/home/alisson/.../node_modules/follow-redirects/index.js:337:24)
+    at new RedirectableRequest (/home/alisson/.../node_modules/follow-redirects/index.js:111:8)
+    at Axios.request (/home/alisson/.../node_modules/axios/lib/core/Axios.js:45:41)
+    at async <anonymous> (/home/alisson/.../index.ts:13:20) {
+  code: 'ERR_CRYPTO_UNSUPPORTED_OPERATION'
+}
+```
+
+Quando fui procurar na internet e nas IAs da vida, normalmente não se acha muito contexto sobre o erro, somente umas dicas para usar a flag `NODE_OPTIONS=--openssl-legacy-provider` antes de iniciar o serviço e o código volta a funcionar "mágicamente".
+
+<br/>
+__Mas isso é gambiarra!__
+<br/>
+
+Inicialmente eu usei essa flag e o código continuou a funcionar, e simplesmente aceitei. Mas esse erro chegou para mim de novo em outro serviço e resolvi ir mais a fundo para entender.
+
+## Contexto do erro:
+Como eu já tinha utilizado aquela flag para fazer funcionar o serviço, tinha uma ideia que fosse algo a ver com o OpenSSL. E pesquisando mais, acabei encontrando essa issue no repositório do Node.js:
+
+https://github.com/nodejs/node/issues/40672
+
+<br/>
+- Mas o que causa isso?
+<br/>
+
+O erro era realmente no OpenSSL, e isso acontece porque a partir do Node.js 17 foi adotado o OpenSSL 3.0 para substituir o OpenSSL 1.1.1 utilizado anteriormente.
+
+Assim, os certificados com uma criptografia que o OpenSSL classifica como fraca ocasionam um erro no OpenSSL que repassa o erro para o Node.
+
+<br/>
+E aqui você pode ver as mudanças que o OpenSSL 3 fez:
+https://openssl-library.org/news/openssl-3.0-notes/
+
+
+## Solução:
+Para resolver a criptografia fraca dos certificados, eu utilizei esses dois comandos:
+
+```ts
+  execFileSync("openssl", [
+    "pkcs12",
+    "-in",
+    weakCertificatePath,
+    "-nodes",
+    "-legacy",
+    "-out",
+    decryptedPfxPath,
+    "-passin",
+    `pass:${certificatePassword}`,
+  ]);
+
+  execFileSync("openssl", [
+    "pkcs12",
+    "-in",
+    decryptedPfxPath,
+    "-export",
+    "-out",
+    upgradedPfxPath,
+    "-passout",
+    `pass:${certificatePassword}`,
+  ]);
+```
+
+O primeiro descriptografa o arquivo e gera na saída o certificado e a sua chave privada;
+<br/>
+Já o segundo criptografa novamente, só que como está utilizando o OpenSSL 3, ele automaticamente irá utilizar uma cifra mais segura. E então o .pfx está atualizado e pode ser utilizado agora sem erros!
