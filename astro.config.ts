@@ -1,11 +1,14 @@
 import { defineConfig } from 'astro/config';
 import icon from 'astro-icon';
 import mdx from '@astrojs/mdx';
-import vercelStatic from '@astrojs/vercel/static';
+import vercel from '@astrojs/vercel';
+
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [mdx(), icon()],
+  site: 'https://alissonsv.com',
+  integrations: [mdx(), icon(), sitemap()],
   markdown: {
     shikiConfig: {
       theme: 'github-dark',
@@ -17,7 +20,7 @@ export default defineConfig({
   },
   // vercel properties
   output: 'static',
-  adapter: vercelStatic({
+  adapter: vercel({
     webAnalytics: {
       enabled: true,
     },
