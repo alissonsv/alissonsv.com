@@ -10,6 +10,10 @@ export default defineConfig({
     shikiConfig: {
       theme: 'github-dark',
     },
+    remarkRehype: {
+      footnoteLabel: 'Referências:',
+      footnoteBackLabel: 'Voltar'
+    }
   },
   // vercel properties
   output: 'static',
