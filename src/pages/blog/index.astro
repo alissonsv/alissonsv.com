@@ -7,23 +7,25 @@ const posts = await getCollection('blog');
 posts.sort((a, b) => Date.parse(b.data.date.toDateString()) - Date.parse(a.data.date.toDateString()))
 ---
 <BlogLayout>
+  <h1 class="sr-only">Blog Posts</h1>
   <ul>
     { posts.map((post) => (
     <li>
       <a href=`/blog/${createSlug(post.data.title)}`>
         <section>
-          <h1>{post.data.title}</h1>
+          <h2>{post.data.title}</h2>
           <time>{
             new Date(post.data.date)
               .toLocaleString('pt-BR', {
                 day: '2-digit',
                 month: 'long',
-                year: 'numeric'
+                year: 'numeric',
+                timeZone: 'UTC'
               })
             }
           </time>
 
-          {post.data.description && <h2>{post.data.description}</h2> }
+          {post.data.description && <h3>{post.data.description}</h3> }
         </section>
       </a>
     </li>
@@ -40,7 +42,8 @@ posts.sort((a, b) => Date.parse(b.data.date.toDateString()) - Date.parse(a.data.
     padding: 15px 0 15px 0;
   }
 
-  h1 {
+  h2 {
+    font-weight: 700;
     padding-top: 10px;
     font-size: 28px;
   }
@@ -51,7 +54,7 @@ posts.sort((a, b) => Date.parse(b.data.date.toDateString()) - Date.parse(a.data.
     font-size: 12px;
   }
 
-  h2 {
+  h3 {
     font-size: 15px;
     padding-top: 15px;
   }
