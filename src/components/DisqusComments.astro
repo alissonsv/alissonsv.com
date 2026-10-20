@@ -1,0 +1,59 @@
+---
+interface Props {
+  identifier: string;
+  title: string;
+}
+
+const { identifier, title } = Astro.props;
+const shortname = import.meta.env.PUBLIC_DISQUS_SHORTNAME?.trim();
+const siteURL = Astro.site ?? Astro.url;
+const canonicalPath = Astro.url.pathname === '/'
+  ? '/'
+  : `${Astro.url.pathname.replace(/\/$/, '')}/`;
+const pageURL = new URL(canonicalPath, siteURL).href;
+const threadIdentifier = `blog:${identifier}`;
+---
+
+{shortname && (
+  <section class="comments" aria-labelledby="comments-title">
+    <h2 id="comments-title">Comentários</h2>
+    <div id="disqus_thread"></div>
+
+    <script define:vars={{ shortname, pageURL, threadIdentifier, title }}>
+      window.disqus_config = function () {
+        this.page.url = pageURL;
+        this.page.identifier = threadIdentifier;
+        this.page.title = title;
+      };
+
+      const script = document.createElement('script');
+      script.src = `https://${shortname}.disqus.com/embed.js`;
+      script.async = true;
+      script.setAttribute('data-timestamp', String(Date.now()));
+      (document.head || document.body).appendChild(script);
+    </script>
+
+    <noscript>
+      Ative o JavaScript para visualizar os comentários fornecidos pelo Disqus.
+    </noscript>
+  </section>
+)}
+
+<style>
+  .comments {
+    border-top: 0.1rem solid #444a53;
+    margin-top: 2rem;
+    padding-top: 2rem;
+  }
+
+  h2 {
+    color: white;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  noscript {
+    color: #adbac7;
+  }
+</style>

@@ -21,6 +21,6 @@ const { Content } = await render(entry);
 
 ---
 
-<BlogPostLayout frontmatter={entry.data}>
+<BlogPostLayout frontmatter={entry.data} identifier={entry.id}>
   <Content />
 </BlogPostLayout>

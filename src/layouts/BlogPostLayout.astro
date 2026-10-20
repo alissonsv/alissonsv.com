@@ -1,7 +1,8 @@
 ---
 import BlogLayout from './BlogLayout.astro'
+import DisqusComments from '../components/DisqusComments.astro';
 
-const { frontmatter } = Astro.props;
+const { frontmatter, identifier } = Astro.props;
 const siteURL = Astro.site ?? Astro.url;
 const canonicalPath = Astro.url.pathname === '/'
   ? '/'
@@ -55,6 +56,8 @@ const structuredData = {
       <slot />
     </div>
   </article>
+
+  <DisqusComments identifier={identifier} title={frontmatter.title} />
 </BlogLayout>
 
 <style>
