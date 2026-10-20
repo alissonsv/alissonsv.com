@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alissonsv.com/sitemap-index.xml

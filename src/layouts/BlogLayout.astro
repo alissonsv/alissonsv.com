@@ -5,9 +5,23 @@ import { Icon } from 'astro-icon/components'
 import BaseLayout from './BaseLayout.astro';
 import profileImage from '../images/profile.jpg'
 
-const { title } = Astro.props;
+const {
+  title,
+  description,
+  type,
+  publishedTime,
+  modifiedTime,
+  structuredData,
+} = Astro.props;
 ---
-<BaseLayout title={ title ?? 'Blog' }>
+<BaseLayout
+  title={title ?? 'Blog'}
+  description={description}
+  type={type}
+  publishedTime={publishedTime}
+  modifiedTime={modifiedTime}
+  structuredData={structuredData}
+>
   <div>
     <div id="sidebar">
       <div id="profile">

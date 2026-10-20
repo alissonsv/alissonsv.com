@@ -2,28 +2,69 @@
 import '../styles/reset.css'
 import '../styles/global.css'
 
-const { title } = Astro.props;
-const fullTitle = `${title} | Alisson Vargas`
-const description = 'Blog com dicas sobre JavaScript, Node.Js e programação no geral'
+const siteName = 'Alisson Vargas';
+const defaultDescription = 'Blog com dicas sobre JavaScript, Node.js e programação no geral';
 const faviconPath = '/favicon.png';
+const siteURL = Astro.site ?? Astro.url;
+
+const {
+  title,
+  description = defaultDescription,
+  image = faviconPath,
+  imageAlt = siteName,
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  structuredData,
+} = Astro.props;
+
+const fullTitle = title === siteName ? siteName : `${title} | ${siteName}`;
+const canonicalPath = Astro.url.pathname === '/'
+  ? '/'
+  : `${Astro.url.pathname.replace(/\/$/, '')}/`;
+const canonicalURL = new URL(canonicalPath, siteURL);
+const imageURL = new URL(image, siteURL);
+
+const websiteStructuredData = Astro.url.pathname === '/'
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: siteName,
+      url: new URL('/', siteURL).href,
+      description: defaultDescription,
+      inLanguage: 'pt-BR',
+    }
+  : undefined;
+
+const structuredDataItems = [websiteStructuredData, structuredData].filter(Boolean);
 
 ---
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <meta name="author" content={siteName} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalURL} />
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={faviconPath} />
-    <meta property="og:site_name" content="Alisson Vargas" />
+    <meta property="og:image" content={imageURL} />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:type" content={type} />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content={siteName} />
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
 
     <!-- Twitter Cards Meta Tags -->
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={faviconPath} />
+    <meta name="twitter:image" content={imageURL} />
+    <meta name="twitter:image:alt" content={imageAlt} />
 
     <!-- Basic Meta Tags -->
     <meta charset="utf-8" />
@@ -31,10 +72,14 @@ const faviconPath = '/favicon.png';
 
     <!-- links -->
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
+    <link rel="icon" type="image/png" href={faviconPath} />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    {structuredDataItems.map(item => (
+      <script type="application/ld+json" set:html={JSON.stringify(item)} />
+    ))}
   </head>
   <body>
     <slot />

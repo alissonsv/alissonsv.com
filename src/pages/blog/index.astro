@@ -14,7 +14,7 @@ posts.sort((a, b) => Date.parse(b.data.date.toDateString()) - Date.parse(a.data.
       <a href=`/blog/${createSlug(post.data.title)}`>
         <section>
           <h2>{post.data.title}</h2>
-          <time>{
+          <time datetime={post.data.date.toISOString()}>{
             new Date(post.data.date)
               .toLocaleString('pt-BR', {
                 day: '2-digit',

@@ -2,15 +2,44 @@
 import BlogLayout from './BlogLayout.astro'
 
 const { frontmatter } = Astro.props;
+const siteURL = Astro.site ?? Astro.url;
+const canonicalPath = Astro.url.pathname === '/'
+  ? '/'
+  : `${Astro.url.pathname.replace(/\/$/, '')}/`;
+const canonicalURL = new URL(canonicalPath, siteURL);
+const publishedTime = new Date(frontmatter.date).toISOString();
+const description = frontmatter.description;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: frontmatter.title,
+  description,
+  datePublished: publishedTime,
+  inLanguage: 'pt-BR',
+  url: canonicalURL.href,
+  mainEntityOfPage: canonicalURL.href,
+  image: new URL('/favicon.png', siteURL).href,
+  author: {
+    '@type': 'Person',
+    name: 'Alisson Vargas',
+    url: new URL('/', siteURL).href,
+  },
+};
 ---
-<BlogLayout title={frontmatter.title}>
+<BlogLayout
+  title={frontmatter.title}
+  description={description}
+  type="article"
+  publishedTime={publishedTime}
+  structuredData={structuredData}
+>
   <a href="/blog">← Voltar pro blog</a>
 
   <article>
     <div id="post-head">
       <h1 id="title">{frontmatter.title}</h1>
       { frontmatter.description && <p id="description">{frontmatter.description}</p> }
-      <time>{
+      <time datetime={publishedTime}>{
         new Date(frontmatter.date)
           .toLocaleString('pt-BR', {
             day: '2-digit',
