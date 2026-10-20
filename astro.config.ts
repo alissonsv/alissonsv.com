@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import icon from 'astro-icon';
 import mdx from '@astrojs/mdx';
+import { unified } from '@astrojs/markdown-remark';
 import vercel from '@astrojs/vercel';
 
 import sitemap from '@astrojs/sitemap';
@@ -10,13 +11,15 @@ export default defineConfig({
   site: 'https://alissonsv.com',
   integrations: [mdx(), icon(), sitemap()],
   markdown: {
+    processor: unified({
+      remarkRehype: {
+        footnoteLabel: 'Referências:',
+        footnoteBackLabel: 'Voltar',
+      },
+    }),
     shikiConfig: {
       theme: 'github-dark',
     },
-    remarkRehype: {
-      footnoteLabel: 'Referências:',
-      footnoteBackLabel: 'Voltar'
-    }
   },
   // vercel properties
   output: 'static',
