@@ -1,9 +1,0 @@
-{
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "rewrites": [
-    {
-      "source": "/books/:file*",
-      "destination": "https://jdzaezb4o0kspt2y.public.blob.vercel-storage.com/books/:file*"
-    }
-  ]
-}
